@@ -6,7 +6,7 @@ class ConditionalVariable;
 
 class mutex {
  public:
-  mutex();
+  mutex() { };
   inline void lock() { mtx.lock(); };
   inline void unlock() { mtx.unlock(); };
 

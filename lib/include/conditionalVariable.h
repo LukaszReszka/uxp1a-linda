@@ -9,7 +9,7 @@ using Time = int;
 namespace uxp {
 class ConditionalVariable {
  public:
-  ConditionalVariable();
+  ConditionalVariable() { };
   void wait(uxp::mutex& mtx) {
     std::unique_lock<std::mutex> lk(mtx.mtx);
     condVariable.wait(lk);

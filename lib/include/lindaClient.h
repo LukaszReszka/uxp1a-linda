@@ -7,7 +7,7 @@ using Time = int;
 
 class LindaClient {
  public:
-  virtual ~LindaClient() = 0;
+  virtual ~LindaClient() = default;
   virtual bool isConditionSatisfied(const uxp::Tuple& tuple) const = 0;
 
   void wakeUp() { condVariable.notify(); }
