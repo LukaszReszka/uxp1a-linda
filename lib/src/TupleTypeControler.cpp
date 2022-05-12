@@ -25,13 +25,17 @@ bool TupleTypeControler::wakeUpOtherClient() {
 
 void TupleTypeControler::addToQue(LindaClient* lindaClient) {
   lockQue();
-  // TODO
+  clients.push_back(lindaClient);
   unlockQue();
 }
 
 void TupleTypeControler::removeFromQue(LindaClient* lindaClient) {
   lockQue();
-  // TODO
+  std::deque<LindaClient*>::iterator clientIt = clients.begin();
+  while (*clientIt != lindaClient && clientIt != clients.end()) {
+    ++clientIt;
+  }
+  if (clientIt != clients.end()) clients.erase(clientIt);
   unlockQue();
 }
 
@@ -86,8 +90,7 @@ std::optional<uxp::Tuple> TupleTypeControler::getTuple(
     ++tupleIt;
   }
   uxp::Tuple tuple = *tupleIt;
-  // TODO
-  // tuples.erase(tuple);
+  tuples.erase(tupleIt);
   wakeUpOtherClient();
   clientMtx.unlock();
   tuplesMtx.unlock();
@@ -127,4 +130,3 @@ std::optional<uxp::Tuple> TupleTypeControler::readTuple(
   tuplesMtx.unlock();
   return tuple;
 }
-
