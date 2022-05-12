@@ -7,5 +7,5 @@ class TupleCondition {
  public:
   bool checkCondition(const uxp::Tuple& tpl) const { return true; };
   Time timeout;
-  std::string getShortcut() { return "IS"; }
+  std::string getShortcut() const { return "IS"; }
 };

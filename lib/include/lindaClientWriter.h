@@ -4,6 +4,7 @@
 
 class LindaClientWriter : public LindaClient {
  public:
+  virtual ~LindaClientWriter() = default;
   inline bool isConditionSatisfied(const uxp::Tuple& tuple) const {
     return true;
   };
