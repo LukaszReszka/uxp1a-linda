@@ -7,19 +7,10 @@ using Time = int;
 
 class LindaClient {
  public:
-  LindaClient(){};
-
-  inline bool isConditionSatisfied(const uxp::Tuple& tuple) const {
-    return condition.checkCondition(tuple);
-  };
-
-  void wait(uxp::mutex& mtx) { condVariable.wait(mtx); }
-
-  void waitFor(uxp::mutex& mtx, Time time) { condVariable.waitFor(mtx, time); }
+  virtual bool isConditionSatisfied(const uxp::Tuple& tuple) const;
 
   void wakeUp() { condVariable.notify(); }
 
- private:
-  TupleCondition condition;
+ protected:
   uxp::ConditionalVariable condVariable;
 };
