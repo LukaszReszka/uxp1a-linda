@@ -22,7 +22,6 @@ class TupleTypeControler {
   void unlockQue();
   void lockTuples();
   void unlockTuples();
-  bool wakeUpOtherClient();
   void addTuple(uxp::Tuple& tuple);
   std::optional<uxp::Tuple> getTuple(const TupleCondition& tupleCond,
                                      const Time timeout);
@@ -34,5 +33,5 @@ class TupleTypeControler {
   uxp::mutex tuplesMtx;
   std::deque<LindaClient*> clients;
   uxp::mutex clientMtx;
-  int tupleKey;
+  bool wakeUpOtherClient();
 };

@@ -24,27 +24,6 @@ void TupleTypeControler::lockTuples() { tuplesMtx.lock(); }
 
 void TupleTypeControler::unlockTuples() { tuplesMtx.unlock(); }
 
-bool TupleTypeControler::wakeUpOtherClient() {
-  std::deque<LindaClient*>::iterator clientIt = clients.begin();
-  std::vector<uxp::Tuple>::iterator tupleIt = tuples.begin();
-  bool isConditionSatisfied = (*clientIt)->isConditionSatisfied(*tupleIt);
-  while (clientIt != clients.end() && !isConditionSatisfied) {
-    while (tupleIt != tuples.end() && !isConditionSatisfied) {
-      isConditionSatisfied = (*clientIt)->isConditionSatisfied(*tupleIt);
-      ++tupleIt;
-    }
-    if (!isConditionSatisfied) {
-      ++clientIt;
-      tupleIt = tuples.begin();
-    }
-  }
-  if (clientIt != clients.end()) {
-    (*clientIt)->wakeUp();
-    return true;
-  }
-  return false;
-}
-
 void TupleTypeControler::addTuple(uxp::Tuple& tuple) {
   clientMtx.lock();
   tuplesMtx.lock();
@@ -133,4 +112,25 @@ std::optional<uxp::Tuple> TupleTypeControler::readTuple(
   clientMtx.unlock();
   tuplesMtx.unlock();
   return tuple;
+}
+
+bool TupleTypeControler::wakeUpOtherClient() {
+  std::deque<LindaClient*>::iterator clientIt = clients.begin();
+  std::vector<uxp::Tuple>::iterator tupleIt = tuples.begin();
+  bool isConditionSatisfied = (*clientIt)->isConditionSatisfied(*tupleIt);
+  while (clientIt != clients.end() && !isConditionSatisfied) {
+    while (tupleIt != tuples.end() && !isConditionSatisfied) {
+      isConditionSatisfied = (*clientIt)->isConditionSatisfied(*tupleIt);
+      ++tupleIt;
+    }
+    if (!isConditionSatisfied) {
+      ++clientIt;
+      tupleIt = tuples.begin();
+    }
+  }
+  if (clientIt != clients.end()) {
+    (*clientIt)->wakeUp();
+    return true;
+  }
+  return false;
 }
