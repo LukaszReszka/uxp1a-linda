@@ -1,27 +1,34 @@
 #pragma once
-#include <map>
 #include <deque>
+#include <map>
 #include <vector>
-#include "mutex"
-#include "lindaTuple.h"
+
 #include "lindaClient.h"
+#include "lindaTuple.h"
+#include "mutex"
 #include "tupleCondition.h"
 
-class TupleTypeControler{
-    public:
-        TupleTypeControler();
-        bool checkOperations();
-        void addToQue();
-        void lockOnQue();
-        void unlockQue();
-        void lockTuples();
-        void unlockTuples();
-        uxp::Tuple readTuple(const TupleCondition & tupleCond);
-        uxp::Tuple getTuple(const TupleCondition& tupleCond);
-        void addTuple();
-    private:
-        std::vector<uxp::Tuple> tuples;
-        uxp::mutex tupleMtx;
-        std::deque<LindaClient> clients;
-        uxp::mutex clientMtx;
+using Time = int;
+
+class TupleTypeControler {
+ public:
+  TupleTypeControler();
+  bool checkOperations();
+  void addToQue(LindaClient& lindaClient);
+  void removeFromQue(LindaClient& lindaClient);
+  void lockQue();
+  void unlockQue();
+  void lockTuples();
+  void unlockTuples();
+  bool wakeUpOtherClient();
+  void addTuple(uxp::Tuple& tuple);
+  uxp::Tuple getTuple(const TupleCondition& tupleCond, const Time timeout);
+  uxp::Tuple readTuple(const TupleCondition& tupleCond, const Time timeout);
+
+ private:
+  std::vector<uxp::Tuple> tuples;
+  uxp::mutex tuplesMtx;
+  std::deque<LindaClient> clients;
+  uxp::mutex clientMtx;
+  int tupleKey;
 };

@@ -1,15 +1,25 @@
 #pragma once
 
-#include "tupleCondition.h"
 #include "conditionalVariable.h"
+#include "tupleCondition.h"
 
-class LindaClient{
-public:
-    LindaClient(){};
+using Time = int;
 
-    inline bool isConditionSatisfied(const uxp::Tuple& tuple)const {return condition.checkCondition(tuple);};
+class LindaClient {
+ public:
+  LindaClient(){};
 
-private:
-    TupleCondition condition;
-    uxp::ConditionalVariable condVariable;
+  inline bool isConditionSatisfied(const uxp::Tuple& tuple) const {
+    return condition.checkCondition(tuple);
+  };
+
+  void wait(uxp::mutex& mtx) { condVariable.wait(mtx); }
+
+  void waitFor(uxp::mutex& mtx, Time time) { condVariable.waitFor(mtx, time); }
+
+  void wakeUp() { condVariable.notify(); }
+
+ private:
+  TupleCondition condition;
+  uxp::ConditionalVariable condVariable;
 };
