@@ -1,7 +1,7 @@
 #pragma once
 
-class TestClass{
-public:
-    TestClass();
-    int add(int a, int b)const;
+class TestClass {
+ public:
+  TestClass();
+  int add(int a, int b) const;
 };

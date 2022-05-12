@@ -4,9 +4,8 @@
 
 class LindaClientReader : public LindaClient {
  public:
-  LindaClientReader(const TupleCondition& tupleCond) {
-      condition = tupleCond;
-  }
+  LindaClientReader(const TupleCondition& tupleCond) { condition = tupleCond; }
+
   inline bool isConditionSatisfied(const uxp::Tuple& tuple) const {
     return condition.checkCondition(tuple);
   };

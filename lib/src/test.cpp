@@ -1,7 +1,5 @@
 #include "test.h"
 
-TestClass::TestClass(){}
+TestClass::TestClass() {}
 
-int TestClass::add(int a, int b) const{
-    return a+b;
-}
+int TestClass::add(int a, int b) const { return a + b; }

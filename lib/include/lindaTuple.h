@@ -3,7 +3,6 @@
 #include <variant>
 #include <vector>
 
-
 using TupleValues = std::vector<std::variant<std::string, u_int32_t, float>>;
 
 namespace uxp {

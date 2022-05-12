@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "lindaClient.h"
-#include "lindaClientWriter.h"
 #include "lindaClientReader.h"
+#include "lindaClientWriter.h"
 #include "lindaTuple.h"
 #include "mutex"
 #include "tupleCondition.h"

@@ -9,11 +9,11 @@ Linda::Linda() {}
 
 void Linda::output(uxp::Tuple &&tuple) {}
 
-optional<uxp::Tuple> Linda::input(const TupleCondition &, Time) { 
-  return nullopt; 
+optional<uxp::Tuple> Linda::input(const TupleCondition &, Time) {
+  return nullopt;
 }
 optional<uxp::Tuple> Linda::read(const TupleCondition &, Time) {
-  return nullopt; 
+  return nullopt;
 }
 
 void Linda::createNewTupleTypeControler(const std::string &tuplePattern) {

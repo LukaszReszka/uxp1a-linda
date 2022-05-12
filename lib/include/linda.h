@@ -3,11 +3,10 @@
 #include <optional>
 #include <string>
 
-#include "mutex.h"
 #include "lindaTuple.h"
+#include "mutex.h"
 #include "tupleCondition.h"
 #include "tupleTypeControler.h"
-
 
 class Linda {
  public:
