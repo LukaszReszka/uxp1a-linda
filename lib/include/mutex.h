@@ -1,18 +1,20 @@
-#pragma once
-#include <mutex>
+#pragma onc
+#include "pthread.h"
 
 namespace uxp {
-class ConditionalVariable;
+class ConditionVariable;
 
 class mutex {
  public:
-  mutex() { };
-  inline void lock() { mtx.lock(); };
-  inline void unlock() { mtx.unlock(); };
+  mutex(int attributes = PTHREAD_MUTEX_ERRORCHECK);
+  void lock();
+  void unlock();
+  ~mutex() noexcept(false);
 
  private:
-  std::mutex mtx;
-  friend class uxp::ConditionalVariable;
+  pthread_mutex_t mtx;
+  pthread_mutexattr_t mtxAttributes;
+  friend class uxp::ConditionVariable;
 };
 
 };  // namespace uxp

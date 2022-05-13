@@ -7,7 +7,6 @@
 #include "lindaClientReader.h"
 #include "lindaClientWriter.h"
 #include "lindaTuple.h"
-#include "mutex.h"
 #include "tupleCondition.h"
 
 using Time = int;

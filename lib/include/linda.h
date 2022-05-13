@@ -4,7 +4,6 @@
 #include <string>
 
 #include "lindaTuple.h"
-#include "mutex.h"
 #include "tupleCondition.h"
 #include "tupleTypeControler.h"
 
