@@ -13,15 +13,7 @@ SingleTupleValue TupleValuesParser::parseSingleValue()
     // if(currentCharacter() != '=')
     // throw new Excpetion
     currentIndex++;
-    while (skipWhites());
-    if (valueType == intType)
-        tupleValue = std::get<u_int32_t>(parseNumber());
-    else if (valueType == floatType)
-        tupleValue = std::get<float>(parseNumber());
-    else if (valueType == stringType)
-        tupleValue = parseString();
-
-    return tupleValue;
+    return parseValue(valueType);
 }
 
 

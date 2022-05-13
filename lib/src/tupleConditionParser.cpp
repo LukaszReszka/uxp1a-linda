@@ -9,19 +9,16 @@ Condition TupleConditionParser::parseSingleCondition()
 {
     auto condition = Condition();
     condition.valueType = parseValueType();
+    while (skipWhites());
     // if(currentCharacter() != ':')
     // throw new Excpetion
     currentIndex++;
     condition.operationType = parseOperationType();
+    while (skipWhites());
     if(condition.operationType == everything)
         return condition;
 
-    if (condition.valueType == intType)
-        condition.value = std::get<u_int32_t>(parseNumber());
-    else if (condition.valueType == floatType)
-        condition.value = std::get<float>(parseNumber());
-    else if (condition.valueType == stringType)
-        condition.value = parseString();
+    condition.value = parseValue(condition.valueType);
 
     return condition;
 }

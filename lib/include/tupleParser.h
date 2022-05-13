@@ -24,7 +24,7 @@ struct Condition
 {
     ValueType valueType;
     OperationType operationType;
-    std::variant<std::string, u_int32_t, float> value;
+    SingleTupleValue value;
 };
 
 class TupleParser
@@ -34,6 +34,7 @@ public:
     virtual ~TupleParser(){};
 
 protected:
+    SingleTupleValue parseValue(ValueType valueType);
     std::string parseString();
     std::variant<u_int32_t, float> parseNumber();
     char currentCharacter();

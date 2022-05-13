@@ -67,13 +67,17 @@ OperationType TupleParser::parseOperationType()
         if (operationType == everything)
             return operationType;
         operation.push_back(currentCharacter());
-        currentIndex++;
 
         itOperationType = operationTypeMap.find(operation);
         if (itOperationType != operationTypeMap.end())
+        {
+            currentIndex++;
             return itOperationType->second;
+        }
+
         // else
         // throw new Excpetion
+        return operationType;
     }
     else
         return equal;
@@ -94,6 +98,25 @@ ValueType TupleParser::parseValueType()
         return itValueType->second;
     // else
     // throw new Excpetion
+}
+
+SingleTupleValue TupleParser::parseValue(ValueType valueType)
+{
+    SingleTupleValue tupleValue;
+    while (skipWhites());
+    if (valueType == intType)
+        tupleValue = std::get<u_int32_t>(parseNumber());
+    else if (valueType == floatType){
+        auto val = parseNumber();
+        if(val.index() == 0)
+            tupleValue = (float)std::get<u_int32_t>(val);
+        else
+            tupleValue = std::get<float>(val);
+    }     
+    else if (valueType == stringType)
+        tupleValue = parseString();
+
+    return tupleValue;
 }
 
 std::variant<u_int32_t, float> TupleParser::parseNumber()
