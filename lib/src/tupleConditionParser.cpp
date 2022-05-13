@@ -13,12 +13,14 @@ Condition TupleConditionParser::parseSingleCondition()
     // throw new Excpetion
     currentIndex++;
     condition.operationType = parseOperationType();
+    if(condition.operationType == everything)
+        return condition;
 
-    if (condition.valueType == intType && condition.operationType != everything)
+    if (condition.valueType == intType)
         condition.value = std::get<u_int32_t>(parseNumber());
-    else if (condition.valueType == floatType && condition.operationType != everything)
+    else if (condition.valueType == floatType)
         condition.value = std::get<float>(parseNumber());
-    else if (condition.valueType == stringType && condition.operationType != everything)
+    else if (condition.valueType == stringType)
         condition.value = parseString();
 
     return condition;

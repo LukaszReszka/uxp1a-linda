@@ -3,6 +3,8 @@
 
 TupleParser::TupleParser(std::string statement)
 {
+    // if(statement.length <= 0)
+    // throw new Excpetion
     this->statement = statement + '|';
     initValueTypeMap();
     initOperationTypeMap();

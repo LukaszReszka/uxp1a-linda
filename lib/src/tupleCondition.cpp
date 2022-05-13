@@ -37,7 +37,7 @@ std::string TupleCondition::getShortcut()
         return true;
     }
 
-    bool TupleCondition::checkSingleCondition(std::variant<std::string, u_int32_t, float> singleValue, Condition singleCondition)
+    bool TupleCondition::checkSingleCondition(SingleTupleValue singleValue, Condition singleCondition)
     {
         switch (singleCondition.operationType)
         {
