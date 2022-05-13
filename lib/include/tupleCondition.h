@@ -1,11 +1,17 @@
 #pragma once
 #include "lindaTuple.h"
+#include "tupleParser.h"
+#include <map>
 
-using Time = int;
+class TupleCondition{
+public:
+    TupleCondition(){}; /// nie wiem czemu
+    TupleCondition(std::vector<Condition> statement);
+    bool checkCondition(const uxp::Tuple& tpl) const;
+    std::string getShortcut() const; 
 
-class TupleCondition {
- public:
-  bool checkCondition(const uxp::Tuple& tpl) const { return true; };
-  Time timeout;
-  std::string getShortcut() const { return "IS"; }
+private:
+    bool checkSingleCondition(std::variant<std::string, u_int32_t, float> singleValue, Condition singleCondition) const;
+    std::vector<Condition> statement; 
+
 };
