@@ -9,7 +9,7 @@ bool TupleTypeControler::wakeUpOtherClient() {
   while (clientIt != clients.end() && !isConditionSatisfied) {
     while (tupleIt != tuples.end() && !isConditionSatisfied) {
       isConditionSatisfied = (*clientIt)->isConditionSatisfied(*tupleIt);
-      ++tupleIt;
+      if (!isConditionSatisfied) ++tupleIt;
     }
     if (!isConditionSatisfied) {
       ++clientIt;
@@ -83,7 +83,7 @@ std::optional<uxp::Tuple> TupleTypeControler::getTuple(
   } else {
     while (tupleIt != tuples.end() && !isConditionSatisfied) {
       isConditionSatisfied = lindaClient.isConditionSatisfied(*tupleIt);
-      ++tupleIt;
+      if (!isConditionSatisfied) ++tupleIt;
     }
     tuplesMtx.unlock();
     if (!isConditionSatisfied) {
@@ -102,7 +102,7 @@ std::optional<uxp::Tuple> TupleTypeControler::getTuple(
     tupleIt = tuples.begin();
     while (tupleIt != tuples.end() && !isConditionSatisfied) {
       isConditionSatisfied = lindaClient.isConditionSatisfied(*tupleIt);
-      ++tupleIt;
+      if (!isConditionSatisfied) ++tupleIt;
     }
   }
   uxp::Tuple tuple = *tupleIt;
@@ -135,7 +135,7 @@ std::optional<uxp::Tuple> TupleTypeControler::readTuple(
   } else {
     while (tupleIt != tuples.end() && !isConditionSatisfied) {
       isConditionSatisfied = lindaClient.isConditionSatisfied(*tupleIt);
-      ++tupleIt;
+      if (!isConditionSatisfied) ++tupleIt;
     }
     tuplesMtx.unlock();
     if (!isConditionSatisfied) {
@@ -154,7 +154,7 @@ std::optional<uxp::Tuple> TupleTypeControler::readTuple(
     tupleIt = tuples.begin();
     while (tupleIt != tuples.end() && !isConditionSatisfied) {
       isConditionSatisfied = lindaClient.isConditionSatisfied(*tupleIt);
-      ++tupleIt;
+      if (!isConditionSatisfied) ++tupleIt;
     }
   }
   uxp::Tuple tuple = *tupleIt;
