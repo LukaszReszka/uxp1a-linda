@@ -12,8 +12,7 @@ class LindaClientReader : public LindaClient {
   };
 
   bool waitFor(uxp::mutex& mtx, Time time) {
-    condVariable.waitFor(mtx, time);
-    return false;
+    return condVariable.waitFor(mtx, time);
   }
 
  private:

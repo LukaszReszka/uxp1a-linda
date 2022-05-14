@@ -16,7 +16,6 @@ class ConditionVariable {
   ~ConditionVariable() noexcept(false);
  private:
   pthread_cond_t conditionVariable;
-  struct timespec t;
-  time_t T;
+  struct timespec ts;
 };
 }  // namespace uxp
