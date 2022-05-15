@@ -1,6 +1,7 @@
 #pragma once
 #include <deque>
 #include <map>
+#include <optional>
 #include <vector>
 
 #include "lindaClient.h"

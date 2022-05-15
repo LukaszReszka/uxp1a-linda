@@ -11,8 +11,8 @@ int main() {
 
 
   
-  std::cout << tupleCondition.checkCondition(tuple);
-  std::cout << tupleCondition.getShortcut();
-  std::cout << tuple.getPatternShortcut();
+  std::cout << tupleCondition.checkCondition(tuple) << std::endl;
+  std::cout << tupleCondition.getShortcut() << std::endl;
+  std::cout << tuple.getPatternShortcut() << std::endl;
   return 0;
 }
