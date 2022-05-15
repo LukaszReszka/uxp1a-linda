@@ -1,4 +1,5 @@
 #include "tupleConditionParser.h"
+#include "parserException.h"
 
 TupleConditionParser::TupleConditionParser(std::string statement) : TupleParser(statement)
 {
@@ -10,9 +11,10 @@ Condition TupleConditionParser::parseSingleCondition()
     auto condition = Condition();
     condition.valueType = parseValueType();
     while (skipWhites());
-    // if(currentCharacter() != ':')
-    // throw new Excpetion
+    if(currentCharacter() != ':')
+        throw new ParserException(NO_COLON);
     currentIndex++;
+    while (skipWhites());
     condition.operationType = parseOperationType();
     while (skipWhites());
     if(condition.operationType == everything)
@@ -27,8 +29,8 @@ Condition TupleConditionParser::parseSingleCondition()
 std::vector<Condition> TupleConditionParser::parseWholeCondition()
 {
     currentIndex = -1;
-    // if(statement.length <= 0)
-    // throw new Excpetion
+    if(statement.length() <= 0)
+        throw new ParserException(EMPTY_CONDITION);
     auto conditionVector = std::vector<Condition>();
     Condition condition;
     do

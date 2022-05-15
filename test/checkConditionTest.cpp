@@ -331,7 +331,7 @@ TEST(checkConditionTest, checkFloatLessEqual1)
 TEST(checkConditionTest, checkFloatLessEqual2)
 {
     auto condParser = TupleConditionParser(std::string("float:<= 123"));
-    auto valParser = TupleValuesParser(std::string("float = 121.3"));
+    auto valParser = TupleValuesParser(std::string("float =121.3"));
     auto tupleCondition = TupleCondition(condParser.parseWholeCondition());
     auto tuple = uxp::Tuple(valParser.parseAllValues());
     EXPECT_EQ(tupleCondition.checkCondition(tuple), true);
@@ -340,7 +340,7 @@ TEST(checkConditionTest, checkFloatLessEqual2)
 TEST(checkConditionTest, checkFloatLessEqual3)
 {
     auto condParser = TupleConditionParser(std::string("float:<=121.1"));
-    auto valParser = TupleValuesParser(std::string("float = 121.1"));
+    auto valParser = TupleValuesParser(std::string("float =121.1"));
     auto tupleCondition = TupleCondition(condParser.parseWholeCondition());
     auto tuple = uxp::Tuple(valParser.parseAllValues());
     EXPECT_EQ(tupleCondition.checkCondition(tuple), true);
