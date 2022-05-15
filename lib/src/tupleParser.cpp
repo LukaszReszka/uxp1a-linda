@@ -1,10 +1,11 @@
 #include "tupleParser.h"
+#include "parserException.h"
 #include <cmath>
 
 TupleParser::TupleParser(std::string statement)
 {
-    // if(statement.length <= 0)
-    // throw new Excpetion
+    if (statement.length() <= 0)
+        throw new ParserException(EMPTY_TUPLE_CONSTRUCTOR);
     this->statement = statement + '|';
     initValueTypeMap();
     initOperationTypeMap();
@@ -12,8 +13,8 @@ TupleParser::TupleParser(std::string statement)
 
 std::string TupleParser::parseString()
 {
-    // if (currentCharacter() != '"')
-    //  throw new Excpetion
+    if (currentCharacter() != '"')
+        throw new ParserException(NO_QUOTE_IN_STRING);
     std::string value = "";
     currentIndex++;
     while (currentCharacter() != '"')
@@ -74,9 +75,6 @@ OperationType TupleParser::parseOperationType()
             currentIndex++;
             return itOperationType->second;
         }
-
-        // else
-        // throw new Excpetion
         return operationType;
     }
     else
@@ -96,23 +94,25 @@ ValueType TupleParser::parseValueType()
     auto itValueType = valueTypeMap.find(value);
     if (itValueType != valueTypeMap.end())
         return itValueType->second;
-    // else
-    // throw new Excpetion
+    else
+        throw new ParserException(UNKNOWN_VALUETYPE);
 }
 
 SingleTupleValue TupleParser::parseValue(ValueType valueType)
 {
     SingleTupleValue tupleValue;
-    while (skipWhites());
+    while (skipWhites())
+        ;
     if (valueType == intType)
         tupleValue = std::get<u_int32_t>(parseNumber());
-    else if (valueType == floatType){
+    else if (valueType == floatType)
+    {
         auto val = parseNumber();
-        if(val.index() == 0)
+        if (val.index() == 0)
             tupleValue = (float)std::get<u_int32_t>(val);
         else
             tupleValue = std::get<float>(val);
-    }     
+    }
     else if (valueType == stringType)
         tupleValue = parseString();
 
@@ -121,8 +121,8 @@ SingleTupleValue TupleParser::parseValue(ValueType valueType)
 
 std::variant<u_int32_t, float> TupleParser::parseNumber()
 {
-    // if(!isdigit(currentCharacter()))
-    // throw new Excpetion
+    if (!isdigit(currentCharacter()))
+        throw new ParserException(NO_DIGIT_IN_NUMBER);
 
     u_int32_t int_part = 0;
     int_part += (u_int32_t)(currentCharacter() - '0');
@@ -132,8 +132,8 @@ std::variant<u_int32_t, float> TupleParser::parseNumber()
         u_int32_t digit = (u_int32_t)(currentCharacter() - '0');
         if ((int_part < 214748364) || (int_part == 214748364 && digit <= 7))
             int_part = int_part * 10 + digit;
-        // else
-        // throw new Excpetion
+        else
+            throw new ParserException(INT_OVERFLOW);
         currentIndex++;
     }
     if (currentCharacter() == '.')
@@ -146,8 +146,8 @@ std::variant<u_int32_t, float> TupleParser::parseNumber()
             u_int32_t digit = (u_int32_t)(currentCharacter() - '0');
             if ((fraction_part < 214748364) || (fraction_part == 214748364 && digit < 7))
                 fraction_part = fraction_part * 10 + digit;
-            // else
-            // throw new Excpetion
+            else
+                throw new ParserException(INT_OVERFLOW);
 
             decimal_places++;
             currentIndex++;
@@ -155,9 +155,6 @@ std::variant<u_int32_t, float> TupleParser::parseNumber()
         return int_part + fraction_part / (float)pow(10, decimal_places);
     }
     return int_part;
-
-    // else
-    // throw new Excpetion
 }
 
 bool TupleParser::skipWhites()
@@ -193,6 +190,6 @@ void TupleParser::initOperationTypeMap()
 
 void TupleParser::checkIfEnd()
 {
-    // if(currentIndex == statement.length()-1)
-    // throw new Excpetion
+    if (currentIndex == statement.length() - 1)
+        throw new ParserException(ETX_IN_STRING);
 }

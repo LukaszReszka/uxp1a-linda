@@ -1,4 +1,5 @@
 #include "tupleCondition.h"
+#include "parserException.h"
 
 TupleCondition::TupleCondition(std::vector<Condition> statement)
 {
@@ -21,8 +22,8 @@ std::string TupleCondition::getShortcut() const
         case stringType:
             shortcut.push_back('S');
             break;
-        //default:
-        //  throw new Excpetion
+        default:
+          throw new ParserException(UNKNOWN_VALUETYPE);
         };
     }
     return shortcut;
