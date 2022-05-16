@@ -158,7 +158,6 @@ std::optional<uxp::Tuple> TupleTypeControler::readTuple(
     }
   }
   uxp::Tuple tuple = *tupleIt;
-  tuples.erase(tupleIt);
   wakeUpOtherClient();
   clientMtx.unlock();
   tuplesMtx.unlock();
