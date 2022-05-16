@@ -10,7 +10,7 @@
 
 using Time = int;
 
-TEST(TupleTypeControlerTest, ShouldCreateTupleTypeControllerWhenOutput) {
+TEST(LindaTest, ShouldCreateTupleTypeControllerWhenOutput) {
   Linda linda = Linda();
   std::vector<std::variant<std::string, u_int32_t, float>> vec =
       std::vector<std::variant<std::string, u_int32_t, float>>();
@@ -20,7 +20,7 @@ TEST(TupleTypeControlerTest, ShouldCreateTupleTypeControllerWhenOutput) {
   EXPECT_TRUE(linda.checkIfTupleSpaceInMap("S"));
 }
 
-TEST(TupleTypeControlerTest, ShouldCreateTupleTypeControllerWhenInput) {
+TEST(LindaTest, ShouldCreateTupleTypeControllerWhenInput) {
   Linda linda = Linda();
   auto condition = Condition();
   condition.valueType = ValueType::stringType;
@@ -35,7 +35,7 @@ TEST(TupleTypeControlerTest, ShouldCreateTupleTypeControllerWhenInput) {
   EXPECT_TRUE(linda.checkIfTupleSpaceInMap("S"));
 }
 
-TEST(TupleTypeControlerTest, ShouldCreateTupleTypeControllerWhenRead) {
+TEST(LindaTest, ShouldCreateTupleTypeControllerWhenRead) {
   Linda linda = Linda();
   auto condition = Condition();
   condition.valueType = ValueType::stringType;
@@ -50,7 +50,7 @@ TEST(TupleTypeControlerTest, ShouldCreateTupleTypeControllerWhenRead) {
   EXPECT_TRUE(linda.checkIfTupleSpaceInMap("S"));
 }
 
-TEST(TupleTypeControlerTest, ShouldCreateOneTupleTypeController) {
+TEST(LindaTest, ShouldCreateOneTupleTypeController) {
   Linda linda = Linda();
   std::vector<std::variant<std::string, u_int32_t, float>> vec1 =
       std::vector<std::variant<std::string, u_int32_t, float>>();
@@ -64,7 +64,7 @@ TEST(TupleTypeControlerTest, ShouldCreateOneTupleTypeController) {
   EXPECT_EQ(1, linda.tupleSpace.size());
 }
 
-TEST(TupleTypeControlerTest, ShouldCreateTwoDifferentTupleTypeControllers) {
+TEST(LindaTest, ShouldCreateTwoDifferentTupleTypeControllers) {
   Linda linda = Linda();
   std::vector<std::variant<std::string, u_int32_t, float>> vec1 =
       std::vector<std::variant<std::string, u_int32_t, float>>();
