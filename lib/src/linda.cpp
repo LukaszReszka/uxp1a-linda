@@ -1,6 +1,7 @@
 #include "linda.h"
 
 #include <algorithm>
+#include <iostream>
 #include <string>
 #include <tuple>
 
@@ -18,8 +19,8 @@ void Linda::output(uxp::Tuple&& tuple) {
     }
     TupleTypeControler& controller = tupleSpace.at(pattern);
     controller.addTuple(tuple);
-  } catch (MutexException e) {
-    // TODO
+  } catch (MutexException& mtxException) {
+    std::cerr << mtxException.what() << std::endl;
   }
 }
 
@@ -32,9 +33,10 @@ optional<uxp::Tuple> Linda::input(const TupleCondition& tupleCondition,
     }
     TupleTypeControler& controller = tupleSpace.at(pattern);
     return controller.getTuple(tupleCondition, timeout);
-  } catch (MutexException e) {
-    // TODO
+  } catch (MutexException& mtxException) {
+    std::cerr << mtxException.what() << std::endl;
   }
+  return nullopt;
 }
 
 optional<uxp::Tuple> Linda::read(const TupleCondition& tupleCondition,
@@ -46,9 +48,10 @@ optional<uxp::Tuple> Linda::read(const TupleCondition& tupleCondition,
     }
     TupleTypeControler& controller = tupleSpace.at(pattern);
     return controller.readTuple(tupleCondition, timeout);
-  } catch (MutexException e) {
-    // TODO
+  } catch (MutexException& mtxException) {
+    std::cerr << mtxException.what() << std::endl;
   }
+  return nullopt;
 }
 
 void Linda::createNewTupleTypeControler(const std::string& tuplePattern) {
