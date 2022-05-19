@@ -10,7 +10,7 @@ using TupleValues = std::vector<SingleTupleValue>;
 namespace uxp {
 class Tuple {
  public:
-  Tuple(std::vector<SingleTupleValue> values){this->values = values;};
+  Tuple(TupleValues values){this->values = values;};
   std::string getPatternShortcut();
   inline const TupleValues& getValues() const { return values; }
 
