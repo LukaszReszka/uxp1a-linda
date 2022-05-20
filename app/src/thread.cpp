@@ -3,18 +3,24 @@
 
 namespace cmd_interpreter {
 
-    void Thread::runThread(Mutex &mutex) {
+    void* Thread::runThread(void * thread) {
+        auto thd = static_cast<Thread*>(thread);
+        thd->run();
+        pthread_exit(NULL);
+    }
+
+    void Thread::run() {
         for(pointer_to_cmd &cmd: commands_to_execute) {
-            mutex.lock();
+            output_mutex->lock();
             std::cout << thread_id << ": " << cmd->getInfoBeforeExecution() << std::endl;
-            mutex.unlock();
+            output_mutex->unlock();
 
             cmd->execute();
 
-            mutex.lock();
+            output_mutex->lock();
             std::cout << thread_id << ": " << cmd->getInfoAfterExecution() << std::endl;
-            mutex.unlock();
+            output_mutex->unlock();
         }
-        pthread_exit(NULL);
     }
+
 } // namespace cmd_interpreter

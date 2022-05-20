@@ -5,7 +5,10 @@
 namespace cmd_interpreter {
 
     const std::map<InterpreterExceptionType, std::string> interpreterExceptionMap{
-            //TODO opisy błędów typu: {UNKNOWN_VALUETYPE, "THERE IS UNKNOWN VALUE TYPE"},
+            {NO_THREADS_DEFINED, "NO THREADS DEFINED"},
+            {CANNOT_CREATE_THREAD, "CANNOT CREATE SPECIFIED THREAD(S)"},
+            {FATAL_ERROR_WHILE_THREAD_JOINING, "ERROR OCCURRED WHILE WAITING FOR THREAD TERMINATION"},
+            {FATAL_ERROR_WHILE_THREAD_CANCELLING, "ERROR OCCURRED WHILE WAITING FOR THREAD CANCELLATION"},
     };
 
     const char* InterpreterException::what() const noexcept {

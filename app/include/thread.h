@@ -12,15 +12,17 @@ namespace cmd_interpreter {
 
     class Thread {
     public:
-        explicit Thread(uint id): thread_id(id) {}
+        explicit Thread(uint id, Mutex &m): thread_id(id), output_mutex(&m) {}
         void addCommand(pointer_to_cmd command_ptr) {commands_to_execute.push_back(std::move(command_ptr));}
-        void runThread(Mutex &mutex);
+        static void* runThread(void *thread);
         ~Thread() = default;
 
     private:
+        void run();
+
         uint thread_id;
-        pthread_t thread;
         std::vector<pointer_to_cmd> commands_to_execute;
+        Mutex *output_mutex;
     };
 
 } // namespace cmd_interpreter
