@@ -10,7 +10,8 @@ namespace cmd_interpreter {
         FATAL_ERROR_WHILE_THREAD_CANCELLING,
         UNRECOGNIZED_COMMAND,
         CANNOT_OPEN_FILE,
-        CANNOT_CLOSE_FILE
+        CANNOT_CLOSE_FILE,
+        NUMBER_TOO_LARGE
     };
 
     class InterpreterException: public std::exception {

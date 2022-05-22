@@ -16,7 +16,7 @@ namespace cmd_interpreter {
         bool exitInterpreter = false;
 
         void handleCommand(std::istream &input, bool during_processing_file_command);
-        void loadCommandsFromFile(std::istream &input);
+        void loadCommandsSavedInFile(std::istream &input);
     };
 
 } // namespace cmd_interpreter

@@ -1,4 +1,3 @@
-#include <iostream>
 //#include "tupleConditionParser.h"
 //#include "tupleValuesParser.h"
 #include "commandInterpreter.h"
@@ -16,5 +15,5 @@ int main() {
     auto command_interpreter = cmd_interpreter::CommandInterpreter();
     command_interpreter.runInterpreter();
 
-  return 0;
+    return 0;
 }

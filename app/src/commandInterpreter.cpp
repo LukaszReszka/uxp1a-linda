@@ -1,6 +1,6 @@
 #include "commandInterpreter.h"
 #include <iostream>
-//#include <climits>
+#include <climits>
 #include <fstream>
 #include "interpreterException.h"
 #include "parserException.h"
@@ -33,9 +33,19 @@ namespace cmd_interpreter {
 
         do {
             std::cout << COMMAND_PROMPT;
-            handleCommand(std::cin, false);
-//            std::cin.clear();
-//            std::cin.ignore(INT_MAX)
+            try {
+                handleCommand(std::cin, false);
+
+            } catch (const ParserException &e) {
+                std::cout << "ERROR: " << e.what() << std::endl;
+                std::cin.clear();
+                std::cin.ignore(INT_MAX);
+
+            } catch (const InterpreterException &e) {
+                std::cout << "ERROR: " << e.what() << std::endl;
+                std::cin.clear();
+                std::cin.ignore(INT_MAX);
+            }
         } while(!exitInterpreter);
     }
 
@@ -54,7 +64,7 @@ namespace cmd_interpreter {
                 linda = std::make_shared<Linda>();
                 std::cout << "Reset done" << std::endl;
             } else if (cmd_type == LOAD_FILE)
-                loadCommandsFromFile(input);
+                loadCommandsSavedInFile(input);
             else if (cmd_type == HELP)
                 std::cout << HELP_MESSAGE;
             else if (cmd_type == EXIT)
@@ -66,26 +76,20 @@ namespace cmd_interpreter {
             throw InterpreterException(UNRECOGNIZED_COMMAND);
     }
 
-    void CommandInterpreter::loadCommandsFromFile(std::istream &input) {
-        std::string path_to_file;
-        char c;
-        input.get(c);
+    void CommandInterpreter::loadCommandsSavedInFile(std::istream &input) {
+        std::ifstream file(parser->getPath(input), std::ifstream::in);
 
-        while(!std::isspace(c) && !input.eof()) {
-            path_to_file += c;
-            input.get(c);
-        }
-
-        std::ifstream file(path_to_file, std::ifstream::in);
-        if(file.fail())
+        if(!file)
             throw InterpreterException(CANNOT_OPEN_FILE);
 
         unsigned int line_number = 1;
         do {
             try {
                 handleCommand(file, true);
+
             } catch (const ParserException &e) {
                 std::cout << "ERROR (line " + std::to_string(line_number) + "): " << e.what() << std::endl;
+
             } catch (const InterpreterException &e) {
                 std::cout << "ERROR (line " + std::to_string(line_number) + "): " << e.what() << std::endl;
             }
@@ -95,7 +99,7 @@ namespace cmd_interpreter {
         std::cout << "Loaded Linda commands from file" << std::endl;
 
         file.close();
-        if(file.fail())
+        if(!file)
             throw InterpreterException(CANNOT_CLOSE_FILE);
     }
 

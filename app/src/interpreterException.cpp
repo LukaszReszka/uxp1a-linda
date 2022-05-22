@@ -12,6 +12,7 @@ namespace cmd_interpreter {
             {UNRECOGNIZED_COMMAND, "UNRECOGNIZED COMMAND"},
             {CANNOT_OPEN_FILE, "CANNOT OPEN SPECIFIED FILE"},
             {CANNOT_CLOSE_FILE, "CANNOT CLOSE FILE"},
+            {NUMBER_TOO_LARGE, "INTEGER TOO LARGE"},
     };
 
     const char* InterpreterException::what() const noexcept {
