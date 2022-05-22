@@ -10,7 +10,7 @@ namespace cmd_interpreter {
     class ThreadsController {
     public:
         ThreadsController() { output_mutex = Mutex(); }
-        void addCommandToThread(uint thread_id, pointer_to_cmd command);
+        void addCommandToThread(int thread_id, pointer_to_cmd command);
         void launchAllThreads();
         inline void removeSavedThreads() { mapIdToThread.clear(); }
         ~ThreadsController();
@@ -19,7 +19,7 @@ namespace cmd_interpreter {
         void waitForAllThreadsTermination();
         void cancelRunningThreads();
 
-        std::unordered_map<uint, pointer_to_thread> mapIdToThread;
+        std::unordered_map<int, pointer_to_thread> mapIdToThread;
         std::vector<pthread_t> running_threads;
         Mutex output_mutex;
     };

@@ -8,6 +8,9 @@ namespace cmd_interpreter {
         CANNOT_CREATE_THREAD,
         FATAL_ERROR_WHILE_THREAD_JOINING,
         FATAL_ERROR_WHILE_THREAD_CANCELLING,
+        UNRECOGNIZED_COMMAND,
+        CANNOT_OPEN_FILE,
+        CANNOT_CLOSE_FILE
     };
 
     class InterpreterException: public std::exception {

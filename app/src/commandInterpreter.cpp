@@ -1,5 +1,102 @@
 #include "commandInterpreter.h"
+#include <iostream>
+//#include <climits>
+#include <fstream>
+#include "interpreterException.h"
+#include "parserException.h"
 
 namespace cmd_interpreter {
+
+    const std::string COMMAND_PROMPT = ">>> ";
+    const std::string WELCOME_MESSAGE = "Linda Command Interpreter - type 'help' for list of available instructions";
+    const std::string HELP_MESSAGE = "List of available instructions:\n"
+                                     "> Linda Commands:\n"
+                                     ">> thread_id:output(tuple), e.g. 0:output(string=\"ok\", float =1.1)\n"
+                                     ">> thread_id:input((tuple_pattern), timeout), e.g. 1:input((string:\"no\", "
+                                     "integer:*), 100)\n"
+                                     ">> thread_id:read((tuple_pattern), timeout), e.g. 2:read((integer:<5), 200)\n"
+                                     "> start -> launch all predefined threads\n"
+                                     "> reset -> reset Linda and all saved threads\n"
+                                     "> file <path> -> read Linda commands from specified file\n"
+                                     "> exit -> exit interpreter.\n";
+
+    CommandInterpreter::CommandInterpreter() {
+        linda = std::make_shared<Linda>();
+        threads_controller = std::make_unique<ThreadsController>();
+        parser = std::make_unique<CommandParser>();
+    }
+
+    void CommandInterpreter::runInterpreter() {
+        system("clear");
+        exitInterpreter = false;
+        std::cout << WELCOME_MESSAGE << std::endl;
+
+        do {
+            std::cout << COMMAND_PROMPT;
+            handleCommand(std::cin, false);
+//            std::cin.clear();
+//            std::cin.ignore(INT_MAX)
+        } while(!exitInterpreter);
+    }
+
+    void CommandInterpreter::handleCommand(std::istream &input, bool during_processing_file_command) {
+        pointer_to_cmd cmd;
+
+        int cmd_type = parser->parseCommand(input, cmd, linda);
+
+        if (cmd_type >= LINDA_COMMAND_MIN_THREAD_ID)
+            threads_controller->addCommandToThread(cmd_type, std::move(cmd));
+        else if(!during_processing_file_command) {
+            if (cmd_type == START)
+                threads_controller->launchAllThreads();
+            else if (cmd_type == RESET) {
+                threads_controller->removeSavedThreads();
+                linda = std::make_shared<Linda>();
+                std::cout << "Reset done" << std::endl;
+            } else if (cmd_type == LOAD_FILE)
+                loadCommandsFromFile(input);
+            else if (cmd_type == HELP)
+                std::cout << HELP_MESSAGE;
+            else if (cmd_type == EXIT)
+                exitInterpreter = true;
+            else
+                throw InterpreterException(UNRECOGNIZED_COMMAND);
+        }
+        else
+            throw InterpreterException(UNRECOGNIZED_COMMAND);
+    }
+
+    void CommandInterpreter::loadCommandsFromFile(std::istream &input) {
+        std::string path_to_file;
+        char c;
+        input.get(c);
+
+        while(!std::isspace(c) && !input.eof()) {
+            path_to_file += c;
+            input.get(c);
+        }
+
+        std::ifstream file(path_to_file, std::ifstream::in);
+        if(file.fail())
+            throw InterpreterException(CANNOT_OPEN_FILE);
+
+        unsigned int line_number = 1;
+        do {
+            try {
+                handleCommand(file, true);
+            } catch (const ParserException &e) {
+                std::cout << "ERROR (line " + std::to_string(line_number) + "): " << e.what() << std::endl;
+            } catch (const InterpreterException &e) {
+                std::cout << "ERROR (line " + std::to_string(line_number) + "): " << e.what() << std::endl;
+            }
+            ++line_number;
+        } while(!file.eof());
+
+        std::cout << "Loaded Linda commands from file" << std::endl;
+
+        file.close();
+        if(file.fail())
+            throw InterpreterException(CANNOT_CLOSE_FILE);
+    }
 
 } // namespace cmd_interpreter

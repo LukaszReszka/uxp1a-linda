@@ -5,7 +5,7 @@
 TupleParser::TupleParser(std::string statement)
 {
     if (statement.length() <= 0)
-        throw new ParserException(EMPTY_TUPLE_CONSTRUCTOR);
+        throw ParserException(EMPTY_TUPLE_CONSTRUCTOR);
     this->statement = statement + '|';
     initValueTypeMap();
     initOperationTypeMap();
@@ -14,7 +14,7 @@ TupleParser::TupleParser(std::string statement)
 std::string TupleParser::parseString()
 {
     if (currentCharacter() != '"')
-        throw new ParserException(NO_QUOTE_IN_STRING);
+        throw ParserException(NO_QUOTE_IN_STRING);
     std::string value = "";
     currentIndex++;
     while (currentCharacter() != '"')
@@ -95,7 +95,7 @@ ValueType TupleParser::parseValueType()
     if (itValueType != valueTypeMap.end())
         return itValueType->second;
     else
-        throw new ParserException(UNKNOWN_VALUETYPE);
+        throw ParserException(UNKNOWN_VALUETYPE);
 }
 
 SingleTupleValue TupleParser::parseValue(ValueType valueType)
@@ -122,7 +122,7 @@ SingleTupleValue TupleParser::parseValue(ValueType valueType)
 std::variant<u_int32_t, float> TupleParser::parseNumber()
 {
     if (!isdigit(currentCharacter()))
-        throw new ParserException(NO_DIGIT_IN_NUMBER);
+        throw ParserException(NO_DIGIT_IN_NUMBER);
 
     u_int32_t int_part = 0;
     int_part += (u_int32_t)(currentCharacter() - '0');
@@ -133,7 +133,7 @@ std::variant<u_int32_t, float> TupleParser::parseNumber()
         if ((int_part < 214748364) || (int_part == 214748364 && digit <= 7))
             int_part = int_part * 10 + digit;
         else
-            throw new ParserException(INT_OVERFLOW);
+            throw ParserException(INT_OVERFLOW);
         currentIndex++;
     }
     if (currentCharacter() == '.')
@@ -147,7 +147,7 @@ std::variant<u_int32_t, float> TupleParser::parseNumber()
             if ((fraction_part < 214748364) || (fraction_part == 214748364 && digit < 7))
                 fraction_part = fraction_part * 10 + digit;
             else
-                throw new ParserException(INT_OVERFLOW);
+                throw ParserException(INT_OVERFLOW);
 
             decimal_places++;
             currentIndex++;
@@ -191,5 +191,5 @@ void TupleParser::initOperationTypeMap()
 void TupleParser::checkIfEnd()
 {
     if (currentIndex == statement.length() - 1)
-        throw new ParserException(ETX_IN_STRING);
+        throw ParserException(ETX_IN_STRING);
 }

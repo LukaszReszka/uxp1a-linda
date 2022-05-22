@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 #include "lindaTuple.h"
 
 namespace cmd_interpreter {
@@ -14,6 +15,8 @@ namespace cmd_interpreter {
     protected:
         static std::string tupleToString(const uxp::Tuple &tuple);
     };
+
+    using pointer_to_cmd = std::unique_ptr<LindaCommand>;
 
 } // namespace cmd_interpreter
 
