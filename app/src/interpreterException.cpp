@@ -13,6 +13,10 @@ namespace cmd_interpreter {
             {CANNOT_OPEN_FILE, "CANNOT OPEN SPECIFIED FILE"},
             {CANNOT_CLOSE_FILE, "CANNOT CLOSE FILE"},
             {NUMBER_TOO_LARGE, "INTEGER TOO LARGE"},
+            {NUMBER_NEGATIVE, "NEGATIVE INTEGERS NOT ALLOWED"},
+            {MISSING_COLON, "MISSING COLON AFTER THREAD_ID"},
+            {MISSING_PARENTHESIS, "MISSING PARENTHESIS"},
+            {MISSING_COMMA, "MISSING COMMA"},
     };
 
     const char* InterpreterException::what() const noexcept {

@@ -5,7 +5,7 @@ namespace cmd_interpreter {
 
     class ReadCommand: public ReadingCommands {
     public:
-        ReadCommand(Linda &linda, TupleCondition &cond, Time &time, std::string &cond_str);
+        ReadCommand(std::shared_ptr<Linda> linda, TupleCondition &cond, Time &time, std::string &cond_str);
         std::string getInfoBeforeExecution() override;
         std::string getInfoAfterExecution() override;
         ~ReadCommand() override = default;

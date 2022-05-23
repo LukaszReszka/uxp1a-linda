@@ -11,7 +11,11 @@ namespace cmd_interpreter {
         UNRECOGNIZED_COMMAND,
         CANNOT_OPEN_FILE,
         CANNOT_CLOSE_FILE,
-        NUMBER_TOO_LARGE
+        NUMBER_TOO_LARGE,
+        NUMBER_NEGATIVE,
+        MISSING_COLON,
+        MISSING_PARENTHESIS,
+        MISSING_COMMA,
     };
 
     class InterpreterException: public std::exception {

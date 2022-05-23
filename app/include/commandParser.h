@@ -1,4 +1,5 @@
 #pragma once
+
 #include "lindaCommand.h"
 #include "linda.h"
 
@@ -16,14 +17,21 @@ namespace cmd_interpreter {
     class CommandParser {
     public:
         int parseCommand(std::istream &input, pointer_to_cmd &command, std::shared_ptr<Linda> &linda);
-        std::string getPath(std::istream &input);
+        std::string getPath(std::istream &input) const;
 
     private:
         char last_read_char;
-        int parseInteger(std::istream &input);
+        int parseNonNegativeInteger(std::istream &input);
         bool getNextChar(std::istream &input);
         void omitWhiteChars(std::istream &input);
         void parseWord(std::istream &input, const std::string &&word);
+        void parseSingleWordCommand(std::istream &input, const std::string &&word);
+        int parseLindaCommand(std::istream &input, pointer_to_cmd &command, std::shared_ptr<Linda> &linda);
+        pointer_to_cmd parseOutputCommand(std::istream &input, std::shared_ptr<Linda> &linda);
+        pointer_to_cmd parseInputCommand(std::istream &input, std::shared_ptr<Linda> &linda);
+        pointer_to_cmd parseReadCommand(std::istream &input, std::shared_ptr<Linda> &linda);
+        void parseTuplePatternAndTime(std::istream &input, TupleCondition &pattern, Time &time,  std::string &cond_str);
+        std::string getTillNextParenthesis(std::istream &input);
     };
 
 } // namespace cmd_interpreter

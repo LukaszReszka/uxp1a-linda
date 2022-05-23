@@ -18,7 +18,8 @@ namespace cmd_interpreter {
                                      "> start -> launch all predefined threads\n"
                                      "> reset -> reset Linda and all saved threads\n"
                                      "> file <path> -> read Linda commands from specified file\n"
-                                     "> exit -> exit interpreter.\n";
+                                     "> exit -> exit interpreter.\n"
+                                     "After each command the '\\n' is required\n";
 
     CommandInterpreter::CommandInterpreter() {
         linda = std::make_shared<Linda>();
