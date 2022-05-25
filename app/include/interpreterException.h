@@ -12,7 +12,7 @@ namespace cmd_interpreter {
         CANNOT_OPEN_FILE,
         CANNOT_CLOSE_FILE,
         NUMBER_TOO_LARGE,
-        NUMBER_NEGATIVE,
+        NUMBER_NONPOSITIVE,
         MISSING_COLON,
         MISSING_PARENTHESIS,
         MISSING_COMMA,

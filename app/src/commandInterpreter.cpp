@@ -19,7 +19,7 @@ namespace cmd_interpreter {
                                      "> reset -> reset Linda and all saved threads\n"
                                      "> file <path> -> read Linda commands from specified file\n"
                                      "> exit -> exit interpreter.\n"
-                                     "After each command the '\\n' is required\n";
+                                     "After each command the '\\n' is required\n\n";
 
     CommandInterpreter::CommandInterpreter() {
         linda = std::make_shared<Linda>();
@@ -39,13 +39,13 @@ namespace cmd_interpreter {
 
             } catch (const ParserException &e) {
                 std::cout << "ERROR: " << e.what() << std::endl;
-                std::cin.clear();
-                std::cin.ignore(INT_MAX);
+//                std::cin.clear();
+//                std::cin.ignore(INT_MAX, '\n');
 
             } catch (const InterpreterException &e) {
                 std::cout << "ERROR: " << e.what() << std::endl;
-                std::cin.clear();
-                std::cin.ignore(INT_MAX);
+//                std::cin.clear();
+//                std::cin.ignore(INT_MAX, '\n');
             }
         } while(!exitInterpreter);
     }
@@ -57,6 +57,8 @@ namespace cmd_interpreter {
 
         if (cmd_type >= LINDA_COMMAND_MIN_THREAD_ID)
             threads_controller->addCommandToThread(cmd_type, std::move(cmd));
+        else if(cmd_type == IDLE)
+            return;
         else if(!during_processing_file_command) {
             if (cmd_type == START)
                 threads_controller->launchAllThreads();

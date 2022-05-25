@@ -6,12 +6,13 @@
 namespace cmd_interpreter {
 
     enum CommandType {
-        LINDA_COMMAND_MIN_THREAD_ID = 0,
+        LINDA_COMMAND_MIN_THREAD_ID = 1,
+        IDLE = 0,
         START = -1,
         RESET = -2,
         EXIT = -3,
         HELP = -4,
-        LOAD_FILE = -5
+        LOAD_FILE = -5,
     };
 
     class CommandParser {
@@ -21,7 +22,7 @@ namespace cmd_interpreter {
 
     private:
         char last_read_char;
-        int parseNonNegativeInteger(std::istream &input);
+        int parsePositiveInteger(std::istream &input);
         bool getNextChar(std::istream &input);
         void omitWhiteChars(std::istream &input);
         void parseWord(std::istream &input, const std::string &&word);
@@ -32,6 +33,7 @@ namespace cmd_interpreter {
         pointer_to_cmd parseReadCommand(std::istream &input, std::shared_ptr<Linda> &linda);
         void parseTuplePatternAndTime(std::istream &input, TupleCondition &pattern, Time &time,  std::string &cond_str);
         std::string getTillNextParenthesis(std::istream &input);
+        void ignoreRestOfLine(std::istream &input) const;
     };
 
 } // namespace cmd_interpreter

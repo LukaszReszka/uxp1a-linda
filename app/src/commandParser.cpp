@@ -36,6 +36,8 @@ namespace cmd_interpreter {
             parseWord(input, "file");
             return LOAD_FILE;
         }
+        else if(last_read_char == '\n')
+            return IDLE;
 
         input.ignore(INT_MAX, '\n');
         throw InterpreterException(UNRECOGNIZED_COMMAND);
@@ -45,7 +47,7 @@ namespace cmd_interpreter {
         std::string path_to_file;
 
         if(!std::isblank(last_read_char)) {
-            input.ignore(INT_MAX, '\n');
+            ignoreRestOfLine(input);
             throw InterpreterException(UNRECOGNIZED_COMMAND);
         }
 
@@ -60,7 +62,7 @@ namespace cmd_interpreter {
         return static_cast<bool>(input);
     }
 
-    int CommandParser::parseNonNegativeInteger(std::istream &input) {
+    int CommandParser::parsePositiveInteger(std::istream &input) {
         std::string number_str;
         while(std::isdigit(last_read_char)) {
             number_str += last_read_char;
@@ -72,13 +74,13 @@ namespace cmd_interpreter {
         try {
             integer = std::stoi(number_str);
         } catch(std::exception &) {
-            input.ignore(INT_MAX, '\n');
+            ignoreRestOfLine(input);
             throw InterpreterException(NUMBER_TOO_LARGE);
         }
 
-        if(integer < 0) {
-            input.ignore(INT_MAX, '\n');
-            throw InterpreterException(NUMBER_NEGATIVE);
+        if(integer <= 0) {
+            ignoreRestOfLine(input);
+            throw InterpreterException(NUMBER_NONPOSITIVE);
         }
 
         return integer;
@@ -93,7 +95,7 @@ namespace cmd_interpreter {
     void CommandParser::parseWord(std::istream &input, const std::string &&word) {
         for(char c: word) {
             if (c != last_read_char) {
-                input.ignore(INT_MAX, '\n');
+                ignoreRestOfLine(input);
                 throw InterpreterException(UNRECOGNIZED_COMMAND);
             }
 
@@ -108,15 +110,13 @@ namespace cmd_interpreter {
             input.ignore(INT_MAX, '\n');
             throw InterpreterException(UNRECOGNIZED_COMMAND);
         }
-
-        getNextChar(input);
     }
 
     int CommandParser::parseLindaCommand(std::istream &input, pointer_to_cmd &command, std::shared_ptr<Linda> &linda) {
-        int thread_id = parseNonNegativeInteger(input);
+        int thread_id = parsePositiveInteger(input);
         omitWhiteChars(input);
         if(last_read_char != ':') {
-            input.ignore(INT_MAX, '\n');
+            ignoreRestOfLine(input);
             throw InterpreterException(MISSING_COLON);
         }
 
@@ -134,7 +134,7 @@ namespace cmd_interpreter {
             char operation_first_letter = last_read_char;
             omitWhiteChars(input);
             if(last_read_char != '(' || !getNextChar(input)) {
-                input.ignore(INT_MAX, '\n');
+                ignoreRestOfLine(input);
                 throw InterpreterException(MISSING_PARENTHESIS);
             }
 
@@ -146,7 +146,7 @@ namespace cmd_interpreter {
                 command = std::move(parseReadCommand(input, linda));
         }
         else {
-            input.ignore(INT_MAX, '\n');
+            ignoreRestOfLine(input);
             throw InterpreterException(UNRECOGNIZED_COMMAND);
         }
 
@@ -193,7 +193,7 @@ namespace cmd_interpreter {
     void CommandParser::parseTuplePatternAndTime(std::istream &input, TupleCondition &pattern, Time &time, std::string &cond_str) {
         omitWhiteChars(input);
         if(last_read_char != '(' || !getNextChar(input)) {
-            input.ignore(INT_MAX, '\n');
+            ignoreRestOfLine(input);
             throw InterpreterException(MISSING_PARENTHESIS);
         }
 
@@ -204,7 +204,7 @@ namespace cmd_interpreter {
             throw InterpreterException(UNRECOGNIZED_COMMAND);
 
         if(last_read_char != ',') {
-            input.ignore(INT_MAX, '\n');
+            ignoreRestOfLine(input);
             throw InterpreterException(MISSING_COMMA);
         }
 
@@ -214,14 +214,14 @@ namespace cmd_interpreter {
         omitWhiteChars(input);
 
         if(!std::isdigit(last_read_char)) {
-            input.ignore(INT_MAX, '\n');
+            ignoreRestOfLine(input);
             throw InterpreterException(UNRECOGNIZED_COMMAND);
         }
 
-        time = parseNonNegativeInteger(input);
+        time = parsePositiveInteger(input);
 
         if(last_read_char != ')') {
-            input.ignore(INT_MAX, '\n');
+            ignoreRestOfLine(input);
             throw InterpreterException(MISSING_PARENTHESIS);
         }
 
@@ -229,6 +229,11 @@ namespace cmd_interpreter {
             input.ignore(INT_MAX, '\n');
             throw InterpreterException(UNRECOGNIZED_COMMAND);
         }
+    }
+
+    void CommandParser::ignoreRestOfLine(std::istream &input) const {
+        if(last_read_char != '\n')
+            input.ignore(INT_MAX, '\n');
     }
 
 } // namespace cmd_interpreter
