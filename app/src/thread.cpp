@@ -9,6 +9,14 @@ namespace cmd_interpreter {
         pthread_exit(NULL);
     }
 
+    std::string Thread::getThreadDetails() {
+        std::string result = "%%%% Thread " + std::to_string(thread_id) + " %%%%\n";
+        for(pointer_to_cmd &cmd: commands_to_execute)
+            result += cmd->getInfoBeforeExecution() + "\n";
+
+        return result;
+    }
+
     void Thread::run() {
         for(pointer_to_cmd &cmd: commands_to_execute) {
             output_mutex->lock();

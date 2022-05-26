@@ -9,7 +9,7 @@ namespace cmd_interpreter {
     }
 
     std::string InputCommand::getInfoBeforeExecution() {
-        return "Getting tuple " + tuple_conditions + " ...";
+        return "Getting tuple " + tuple_conditions;
     }
 
     std::string InputCommand::getInfoAfterExecution() {

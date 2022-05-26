@@ -28,6 +28,17 @@ namespace cmd_interpreter {
         waitForAllThreadsTermination();
     }
 
+    std::string ThreadsController::showAllSavedThreads() {
+        if(mapIdToThread.empty())
+            return "No threads defined\n";
+
+        std::string result;
+        for(auto &iter: mapIdToThread)
+            result += iter.second->getThreadDetails() + "\n";
+
+        return result;
+    }
+
     ThreadsController::~ThreadsController() {
         cancelRunningThreads();
         waitForAllThreadsTermination();

@@ -14,6 +14,7 @@ namespace cmd_interpreter {
         if(!getNextChar(input))
             throw InterpreterException(UNRECOGNIZED_COMMAND);
 
+        omitWhiteChars(input);
         if(std::isdigit(last_read_char))
             return parseLindaCommand(input, command, linda);
         else if(last_read_char == 's') {
@@ -31,6 +32,10 @@ namespace cmd_interpreter {
         else if(last_read_char == 'e') {
             parseSingleWordCommand(input, "exit");
             return EXIT;
+        }
+        else if(last_read_char == 't') {
+            parseSingleWordCommand(input, "threads");
+            return LIST_THREADS;
         }
         else if(last_read_char == 'f') {
             parseWord(input, "file");
@@ -123,6 +128,9 @@ namespace cmd_interpreter {
         if(!getNextChar(input))
             throw InterpreterException(UNRECOGNIZED_COMMAND);
 
+        omitWhiteChars(input);
+
+        char operation_first_letter = last_read_char;
         if(last_read_char == 'o' || last_read_char == 'i' || last_read_char == 'r') {
             if(last_read_char == 'o')
                 parseWord(input, "output");
@@ -131,7 +139,6 @@ namespace cmd_interpreter {
             else
                 parseWord(input, "read");
 
-            char operation_first_letter = last_read_char;
             omitWhiteChars(input);
             if(last_read_char != '(' || !getNextChar(input)) {
                 ignoreRestOfLine(input);
@@ -184,7 +191,7 @@ namespace cmd_interpreter {
         std::string result;
         while(last_read_char != ')') {
             result += last_read_char;
-            if(!getNextChar(input))
+            if(last_read_char == '\n' || !getNextChar(input))
                 throw InterpreterException(MISSING_PARENTHESIS);
         }
         return result;
@@ -219,6 +226,7 @@ namespace cmd_interpreter {
         }
 
         time = parsePositiveInteger(input);
+        omitWhiteChars(input);
 
         if(last_read_char != ')') {
             ignoreRestOfLine(input);

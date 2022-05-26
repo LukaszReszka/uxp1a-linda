@@ -17,7 +17,8 @@ namespace cmd_interpreter {
                                      ">> thread_id:read((tuple_pattern), timeout), e.g. 2:read((integer:<5), 200)\n"
                                      "> start -> launch all predefined threads\n"
                                      "> reset -> reset Linda and all saved threads\n"
-                                     "> file <path> -> read Linda commands from specified file\n"
+                                     "> threads -> list details about all saved threads\n"
+                                     "> file <path> -> read Linda commands from specified file; apart from <path> (single 'word'), rest of the line will be ignored\n"
                                      "> exit -> exit interpreter.\n"
                                      "After each command the '\\n' is required\n\n";
 
@@ -39,13 +40,12 @@ namespace cmd_interpreter {
 
             } catch (const ParserException &e) {
                 std::cout << "ERROR: " << e.what() << std::endl;
-//                std::cin.clear();
-//                std::cin.ignore(INT_MAX, '\n');
+                std::cin.clear();
+                std::cin.ignore(INT_MAX, '\n');
 
             } catch (const InterpreterException &e) {
+                std::cin.clear();
                 std::cout << "ERROR: " << e.what() << std::endl;
-//                std::cin.clear();
-//                std::cin.ignore(INT_MAX, '\n');
             }
         } while(!exitInterpreter);
     }
@@ -68,6 +68,8 @@ namespace cmd_interpreter {
                 std::cout << "Reset done" << std::endl;
             } else if (cmd_type == LOAD_FILE)
                 loadCommandsSavedInFile(input);
+            else if (cmd_type == LIST_THREADS)
+                std::cout << threads_controller->showAllSavedThreads();
             else if (cmd_type == HELP)
                 std::cout << HELP_MESSAGE;
             else if (cmd_type == EXIT)

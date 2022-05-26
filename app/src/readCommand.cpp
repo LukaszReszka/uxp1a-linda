@@ -9,7 +9,7 @@ namespace cmd_interpreter {
     }
 
     std::string ReadCommand::getInfoBeforeExecution() {
-        return "Reading tuple " + tuple_conditions + " ...";
+        return "Reading tuple " + tuple_conditions;
     }
 
     std::string ReadCommand::getInfoAfterExecution() {

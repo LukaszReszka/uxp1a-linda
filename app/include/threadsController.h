@@ -1,5 +1,5 @@
 #pragma once
-#include <unordered_map>
+#include <map>
 #include "thread.h"
 #include "mutex.h"
 
@@ -9,19 +9,20 @@ namespace cmd_interpreter {
 
     class ThreadsController {
     public:
-        ThreadsController() { output_mutex = Mutex(); }
+        ThreadsController() {output_mutex = std::make_shared<Mutex>();};
         void addCommandToThread(int thread_id, pointer_to_cmd command);
         void launchAllThreads();
         inline void removeSavedThreads() { mapIdToThread.clear(); }
+        std::string showAllSavedThreads();
         ~ThreadsController();
 
     private:
         void waitForAllThreadsTermination();
         void cancelRunningThreads();
 
-        std::unordered_map<int, pointer_to_thread> mapIdToThread;
+        std::map<int, pointer_to_thread> mapIdToThread;
         std::vector<pthread_t> running_threads;
-        Mutex output_mutex;
+        std::shared_ptr<Mutex> output_mutex;
     };
 
 } // namespace cmd_interpreter

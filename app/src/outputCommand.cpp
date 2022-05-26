@@ -13,7 +13,7 @@ namespace cmd_interpreter {
     }
 
     std::string OutputCommand::getInfoBeforeExecution() {
-        return "Inserting tuple " + tuple_string + " ...";
+        return "Inserting tuple " + tuple_string;
     }
 
     std::string OutputCommand::getInfoAfterExecution() {

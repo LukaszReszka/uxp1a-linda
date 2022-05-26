@@ -13,6 +13,7 @@ namespace cmd_interpreter {
         EXIT = -3,
         HELP = -4,
         LOAD_FILE = -5,
+        LIST_THREADS = -6
     };
 
     class CommandParser {
