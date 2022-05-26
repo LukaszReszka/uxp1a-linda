@@ -2,7 +2,7 @@
 
 namespace cmd_interpreter {
 
-    InputCommand::InputCommand(std::shared_ptr<Linda> linda, TupleCondition &cond, Time &time, std::string &cond_str) : ReadingCommands(cond_str) {
+    InputCommand::InputCommand(std::shared_ptr<Linda> &linda, TupleCondition &cond, Time &time, std::string &cond_str) : ReadingCommands(cond_str) {
         command = [&linda, &cond, &time]() {
             return linda->input(cond, time);
         };

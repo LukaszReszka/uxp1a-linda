@@ -161,7 +161,9 @@ namespace cmd_interpreter {
     }
 
     pointer_to_cmd CommandParser::parseOutputCommand(std::istream &input, std::shared_ptr<Linda> &linda) {
-        pointer_to_cmd cmd = std::make_unique<OutputCommand>(linda,uxp::Tuple(TupleValuesParser(getTillNextParenthesis(input)).parseAllValues()));
+        auto parsedValues = TupleValuesParser(getTillNextParenthesis(input)).parseAllValues();
+        uxp::Tuple parsedTuple(parsedValues);
+        pointer_to_cmd cmd = std::make_unique<OutputCommand>(linda, std::move(parsedTuple));
 
         if(!getNextChar(input) || last_read_char != '\n') {
             input.ignore(INT_MAX, '\n');
