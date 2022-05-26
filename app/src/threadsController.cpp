@@ -14,9 +14,9 @@ namespace cmd_interpreter {
         if(mapIdToThread.empty())
             throw InterpreterException(NO_THREADS_DEFINED);
 
-        for(auto &iter: mapIdToThread) {
+        for(auto &[key,value]: mapIdToThread) {
             pthread_t thread_id;
-            if(pthread_create(&thread_id, NULL, &Thread::runThread, &iter.second)) {
+            if(pthread_create(&thread_id, NULL, &Thread::runThread, value.get())) {
                 cancelRunningThreads();
                 waitForAllThreadsTermination();
                 throw InterpreterException(CANNOT_CREATE_THREAD);

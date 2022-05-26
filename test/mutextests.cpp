@@ -4,17 +4,17 @@
 #include "mutex.h"
 
 TEST(MutexTest, mutexCreation) {
-  EXPECT_NO_THROW(uxp::mutex mtx);
+  EXPECT_NO_THROW(uxp::Mutex mtx);
 };
 
 TEST(MutexTest, mutexLock) {
-  uxp::mutex mtx;
+  uxp::Mutex mtx;
   EXPECT_NO_THROW(mtx.lock());
   EXPECT_NO_THROW(mtx.unlock());
 };
 
 TEST(MutexTest, RaceTest) {
-  uxp::mutex mtx;
+  uxp::Mutex mtx;
   int number = 0;
   const int iterationNumber = 1000;
   auto incrementNumber = [&mtx, &number, &iterationNumber]() {

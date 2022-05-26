@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include "thread.h"
-#include "mutex.h"
+#include "Mutex.h"
 
 namespace cmd_interpreter {
 
@@ -9,7 +9,7 @@ namespace cmd_interpreter {
 
     class ThreadsController {
     public:
-        ThreadsController() {output_mutex = std::make_shared<Mutex>();};
+        ThreadsController() = default;
         void addCommandToThread(int thread_id, pointer_to_cmd command);
         void launchAllThreads();
         inline void removeSavedThreads() { mapIdToThread.clear(); }
@@ -22,7 +22,7 @@ namespace cmd_interpreter {
 
         std::map<int, pointer_to_thread> mapIdToThread;
         std::vector<pthread_t> running_threads;
-        std::shared_ptr<Mutex> output_mutex;
+        Mutex output_mutex;
     };
 
 } // namespace cmd_interpreter

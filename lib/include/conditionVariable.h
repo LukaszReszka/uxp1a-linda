@@ -10,8 +10,8 @@ namespace uxp {
 class ConditionVariable {
  public:
   ConditionVariable();
-  void wait(uxp::mutex& mtx);
-  bool waitFor(uxp::mutex& mtx, Time time);
+  void wait(uxp::Mutex& mtx);
+  bool waitFor(uxp::Mutex& mtx, Time time);
   void notify();
   ~ConditionVariable() noexcept(false);
  private:

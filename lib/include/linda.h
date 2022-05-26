@@ -16,7 +16,7 @@ class Linda {
 
  private:
   std::map<std::string, TupleTypeControler> tupleSpace;
-  mutable uxp::mutex mtx;
+  mutable uxp::Mutex mtx;
 
   void createNewTupleTypeControler(const std::string &tuplePattern);
   bool checkIfTupleSpaceInMap(const std::string &tuplePattern) const;

@@ -18,16 +18,16 @@ namespace cmd_interpreter {
     }
 
     void Thread::run() {
-        for(pointer_to_cmd &cmd: commands_to_execute) {
-            output_mutex->lock();
+        for(auto &cmd: commands_to_execute) {
+//            output_mutex.lock();
             std::cout << thread_id << ": " << cmd->getInfoBeforeExecution() << std::endl;
-            output_mutex->unlock();
+//            output_mutex.unlock();
 
             cmd->execute();
 
-            output_mutex->lock();
+//            output_mutex.lock();
             std::cout << thread_id << ": " << cmd->getInfoAfterExecution() << std::endl;
-            output_mutex->unlock();
+//            output_mutex.unlock();
         }
     }
 

@@ -11,7 +11,7 @@ class LindaClientReader : public LindaClient {
     return condition.checkCondition(tuple);
   };
 
-  bool waitFor(uxp::mutex& mtx, Time time) {
+  bool waitFor(uxp::Mutex& mtx, Time time) {
     return condVariable.waitFor(mtx, time);
   }
 

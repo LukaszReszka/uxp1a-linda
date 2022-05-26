@@ -29,9 +29,9 @@ class TupleTypeControler {
 
  private:
   std::vector<uxp::Tuple> tuples;
-  uxp::mutex tuplesMtx;
+  uxp::Mutex tuplesMtx;
   std::deque<LindaClient*> clients;
-  uxp::mutex clientMtx;
+  uxp::Mutex clientMtx;
   bool wakeUpOtherClient();
   void addToQue(LindaClient* lindaClient);
   void removeFromQue(LindaClient* lindaClient);
