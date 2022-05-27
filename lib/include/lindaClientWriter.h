@@ -9,5 +9,5 @@ class LindaClientWriter : public LindaClient {
     return true;
   };
 
-  void wait(uxp::mutex& mtx) { condVariable.wait(mtx); }
+  void wait(uxp::Mutex& mtx) { condVariable.wait(mtx); }
 };

@@ -12,7 +12,7 @@ Condition TupleConditionParser::parseSingleCondition()
     condition.valueType = parseValueType();
     while (skipWhites());
     if(currentCharacter() != ':')
-        throw new ParserException(NO_COLON);
+        throw ParserException(NO_COLON);
     currentIndex++;
     while (skipWhites());
     condition.operationType = parseOperationType();
@@ -30,7 +30,7 @@ std::vector<Condition> TupleConditionParser::parseWholeCondition()
 {
     currentIndex = -1;
     if(statement.length() <= 0)
-        throw new ParserException(EMPTY_CONDITION);
+        throw ParserException(EMPTY_CONDITION);
     auto conditionVector = std::vector<Condition>();
     Condition condition;
     do

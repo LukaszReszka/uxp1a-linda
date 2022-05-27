@@ -5,12 +5,12 @@
 #include "gtest/gtest.h"
 
 TEST(CondVariableTest, ConditionVariableLockCreation) {
-  uxp::mutex mtx;
+  uxp::Mutex mtx;
   EXPECT_NO_THROW(uxp::ConditionVariable condVariable);
 };
 
 TEST(CondVariableTest, SleepAndWakeUpTest) {
-  uxp::mutex mtx;
+  uxp::Mutex mtx;
   uxp::ConditionVariable condVariable;
   int number = 0;
   const int iterationNumber = 10;

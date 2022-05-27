@@ -23,7 +23,7 @@ std::string TupleCondition::getShortcut() const
             shortcut.push_back('S');
             break;
         default:
-          throw new ParserException(UNKNOWN_VALUETYPE);
+          throw ParserException(UNKNOWN_VALUETYPE);
         };
     }
     return shortcut;

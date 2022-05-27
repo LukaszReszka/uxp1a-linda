@@ -1,4 +1,5 @@
 #include "lindaTuple.h"
+#include <iostream>
 
 namespace uxp {
 std::string Tuple::getPatternShortcut()

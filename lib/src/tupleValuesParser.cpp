@@ -12,7 +12,7 @@ SingleTupleValue TupleValuesParser::parseSingleValue()
     while (skipWhites())
         ;
     if (currentCharacter() != '=')
-        throw new ParserException(NO_EQUAL_SIGN);
+        throw ParserException(NO_EQUAL_SIGN);
     currentIndex++;
     while (skipWhites())
         ;

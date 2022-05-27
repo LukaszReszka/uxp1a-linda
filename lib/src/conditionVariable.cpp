@@ -20,12 +20,12 @@ uxp::ConditionVariable::~ConditionVariable() noexcept(false) {
   }
 }
 
-void uxp::ConditionVariable::wait(uxp::mutex& mutex) {
+void uxp::ConditionVariable::wait(uxp::Mutex& mutex) {
   if (pthread_cond_wait(&conditionVariable, &mutex.mtx) != 0)
     throw ConditionVariableException(WAIT_ERROR);
 }
 
-bool uxp::ConditionVariable::waitFor(uxp::mutex& mtx, Time timeInSec) {
+bool uxp::ConditionVariable::waitFor(uxp::Mutex& mtx, Time timeInSec) {
   clock_gettime(CLOCK_REALTIME, &ts);
   ts.tv_sec += timeInSec;
   int result = pthread_cond_timedwait(&conditionVariable, &mtx.mtx, &ts);

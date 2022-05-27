@@ -1,15 +1,15 @@
-#pragma onc
+#pragma once
 #include "pthread.h"
 
 namespace uxp {
 class ConditionVariable;
 
-class mutex {
+class Mutex {
  public:
-  mutex(int attributes = PTHREAD_MUTEX_ERRORCHECK);
+  Mutex(int attributes = PTHREAD_MUTEX_ERRORCHECK);
   void lock();
   void unlock();
-  ~mutex() noexcept(false);
+  ~Mutex() noexcept(false);
 
  private:
   pthread_mutex_t mtx;
