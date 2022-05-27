@@ -19,15 +19,14 @@ namespace cmd_interpreter {
 
     void Thread::run() {
         for(auto &cmd: commands_to_execute) {
-//            output_mutex.lock();
+            std::unique_lock<std::mutex> guard(output_mutex);
             std::cout << thread_id << ": " << cmd->getInfoBeforeExecution() << std::endl;
-//            output_mutex.unlock();
+            guard.unlock();
 
             cmd->execute();
 
-//            output_mutex.lock();
+            guard.lock();
             std::cout << thread_id << ": " << cmd->getInfoAfterExecution() << std::endl;
-//            output_mutex.unlock();
         }
     }
 

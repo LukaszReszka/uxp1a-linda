@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
+#include <mutex>
 #include "thread.h"
-#include "Mutex.h"
 
 namespace cmd_interpreter {
 
@@ -22,7 +22,7 @@ namespace cmd_interpreter {
 
         std::map<int, pointer_to_thread> mapIdToThread;
         std::vector<pthread_t> running_threads;
-        Mutex output_mutex;
+        std::mutex output_mutex;
     };
 
 } // namespace cmd_interpreter

@@ -1,5 +1,4 @@
 #include "commandParser.h"
-#include <iostream>
 #include <climits>
 #include "interpreterException.h"
 #include "outputCommand.h"
@@ -212,6 +211,7 @@ namespace cmd_interpreter {
         if(!getNextChar(input))
             throw InterpreterException(UNRECOGNIZED_COMMAND);
 
+        omitWhiteChars(input);
         if(last_read_char != ',') {
             ignoreRestOfLine(input);
             throw InterpreterException(MISSING_COMMA);
@@ -221,7 +221,6 @@ namespace cmd_interpreter {
             throw InterpreterException(UNRECOGNIZED_COMMAND);
 
         omitWhiteChars(input);
-
         if(!std::isdigit(last_read_char)) {
             ignoreRestOfLine(input);
             throw InterpreterException(UNRECOGNIZED_COMMAND);

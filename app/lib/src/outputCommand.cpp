@@ -1,10 +1,10 @@
 #include "outputCommand.h"
 
 namespace cmd_interpreter {
-    OutputCommand::OutputCommand(std::shared_ptr<Linda> &linda, uxp::Tuple &&tuple) :tpl(std::move(tuple)) {
-        tuple_string = tupleToString(tpl);
+    OutputCommand::OutputCommand(std::shared_ptr<Linda> &linda, uxp::Tuple &&tpl) : tuple(std::move(tpl)) {
+        tuple_string = tupleToString(tuple);
         command = [&linda, this]() {
-            linda->output(std::move((this->tpl)));
+            linda->output(std::move((this->tuple)));
         };
     }
 

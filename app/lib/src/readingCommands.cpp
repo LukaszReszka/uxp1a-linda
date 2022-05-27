@@ -7,7 +7,7 @@ namespace cmd_interpreter {
         if (read_tuple.has_value())
             tuple_string = tupleToString(*read_tuple);
         else
-            tuple_string = "none";
+            tuple_string = "none - timeout!";
     }
 
 } // namespace cmd_interpreter
