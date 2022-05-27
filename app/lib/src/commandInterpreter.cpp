@@ -82,7 +82,8 @@ namespace cmd_interpreter {
     }
 
     void CommandInterpreter::loadCommandsSavedInFile(std::istream &input) {
-        std::ifstream file(parser->getPath(input), std::ifstream::in);
+        std::string path_to_file = parser->getPath(input);
+        std::ifstream file(path_to_file, std::ifstream::in);
 
         if(!file)
             throw InterpreterException(CANNOT_OPEN_FILE);
@@ -93,19 +94,18 @@ namespace cmd_interpreter {
                 handleCommand(file, true);
 
             } catch (const ParserException &e) {
-                std::cout << "ERROR (line " + std::to_string(line_number) + "): " << e.what() << std::endl;
-
+                file.ignore(INT_MAX, '\n');
+                if(!file.eof())
+                    std::cout << "ERROR (line " + std::to_string(line_number) + "): " << e.what() << std::endl;
             } catch (const InterpreterException &e) {
-                std::cout << "ERROR (line " + std::to_string(line_number) + "): " << e.what() << std::endl;
+                if(!file.eof())
+                    std::cout << "ERROR (line " + std::to_string(line_number) + "): " << e.what() << std::endl;
             }
             ++line_number;
         } while(!file.eof());
 
-        std::cout << "Loaded Linda commands from file" << std::endl;
-
         file.close();
-        if(!file)
-            throw InterpreterException(CANNOT_CLOSE_FILE);
+        std::cout << "Loaded Linda commands from file " << path_to_file << std::endl;
     }
 
 } // namespace cmd_interpreter

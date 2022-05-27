@@ -47,17 +47,25 @@ namespace cmd_interpreter {
         throw InterpreterException(UNRECOGNIZED_COMMAND);
     }
 
-    std::string CommandParser::getPath(std::istream &input) const {
+    std::string CommandParser::getPath(std::istream &input) {
         std::string path_to_file;
 
-        if(!std::isblank(last_read_char)) {
+        if(!std::isblank(last_read_char) || !getNextChar(input)) {
             ignoreRestOfLine(input);
             throw InterpreterException(UNRECOGNIZED_COMMAND);
         }
 
-        input >> path_to_file;
-        input.ignore(INT_MAX, '\n');
+        omitWhiteChars(input);
+        if(last_read_char == '\n')
+            throw InterpreterException(UNRECOGNIZED_COMMAND);
 
+        while(!std::isblank(last_read_char) && last_read_char != '\n') {
+            path_to_file += last_read_char;
+            if(!getNextChar(input))
+                throw InterpreterException(UNRECOGNIZED_COMMAND);
+        }
+
+        ignoreRestOfLine(input);
         return path_to_file;
     }
 

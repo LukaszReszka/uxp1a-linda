@@ -19,7 +19,7 @@ namespace cmd_interpreter {
     class CommandParser {
     public:
         int parseCommand(std::istream &input, pointer_to_cmd &command, std::shared_ptr<Linda> &linda);
-        std::string getPath(std::istream &input) const;
+        std::string getPath(std::istream &input);
 
     private:
         char last_read_char;
