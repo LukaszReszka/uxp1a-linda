@@ -1,5 +1,4 @@
 #include "gtest/gtest.h"
-#include "test.h"
 
 #include "tupleConditionParser.h"
 #include "tupleValuesParser.h"
@@ -8,19 +7,25 @@
 TEST(shortcutTest, tupleShortcut1)
 {
     auto valParser = TupleValuesParser(std::string("string = \"dd\", integer  = 123, float =1.1 , float =1.1"));
-    EXPECT_EQ((uxp::Tuple(valParser.parseAllValues())).getPatternShortcut(), "SIFF");
+    auto values = valParser.parseAllValues();
+    auto tuple = uxp::Tuple(values);
+    EXPECT_EQ(tuple.getPatternShortcut(), "SIFF");
 }
 
 TEST(shortcutTest, tupleShortcut2)
 {
     auto valParser = TupleValuesParser(std::string("float =1.1"));
-    EXPECT_EQ((uxp::Tuple(valParser.parseAllValues())).getPatternShortcut(), "F");
+    auto values = valParser.parseAllValues();
+    auto tuple = uxp::Tuple(values);
+    EXPECT_EQ(tuple.getPatternShortcut(), "F");
 }
 
 TEST(shortcutTest, tupleShortcut3)
 {
     auto valParser = TupleValuesParser(std::string("float  =1.1, string = \"dd\", integer  = 123"));
-    EXPECT_EQ((uxp::Tuple(valParser.parseAllValues())).getPatternShortcut(), "FSI");
+    auto values = valParser.parseAllValues();
+    auto tuple = uxp::Tuple(values);
+    EXPECT_EQ(tuple.getPatternShortcut(), "FSI");
 }
 
 TEST(shortcutTest, condShortcut1)
