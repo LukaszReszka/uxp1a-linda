@@ -10,7 +10,9 @@ enum ParserExceptionType {
   ETX_IN_STRING,
   NO_DIGIT_IN_NUMBER,
   INT_OVERFLOW,
-  NO_EQUAL_SIGN
+  NO_EQUAL_SIGN,
+  EXPECTED_NEXT_STATEMENT,
+  WRONG_SYNTAX
 };
 
 class ParserException : public std::exception {

@@ -12,8 +12,8 @@ using Time = int;
 
 TEST(LindaTest, ShouldCreateTupleTypeControllerWhenOutput) {
   Linda linda = Linda();
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   linda.output(uxp::Tuple(vec));
 
@@ -52,12 +52,12 @@ TEST(LindaTest, ShouldCreateTupleTypeControllerWhenRead) {
 
 TEST(LindaTest, ShouldCreateOneTupleTypeController) {
   Linda linda = Linda();
-  std::vector<std::variant<std::string, u_int32_t, float>> vec1 =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec1 =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec1.push_back(std::string("test1"));
   linda.output(uxp::Tuple(vec1));
-  std::vector<std::variant<std::string, u_int32_t, float>> vec2 =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec2 =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec2.push_back(std::string("test2"));
   linda.output(uxp::Tuple(vec2));
 
@@ -66,13 +66,13 @@ TEST(LindaTest, ShouldCreateOneTupleTypeController) {
 
 TEST(LindaTest, ShouldCreateTwoDifferentTupleTypeControllers) {
   Linda linda = Linda();
-  std::vector<std::variant<std::string, u_int32_t, float>> vec1 =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec1 =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec1.push_back(std::string("test"));
   linda.output(uxp::Tuple(vec1));
-  std::vector<std::variant<std::string, u_int32_t, float>> vec2 =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
-  vec2.push_back(u_int32_t(0));
+  std::vector<std::variant<std::string, int32_t, float>> vec2 =
+      std::vector<std::variant<std::string, int32_t, float>>();
+  vec2.push_back(int32_t(0));
   linda.output(uxp::Tuple(vec2));
 
   EXPECT_EQ(2, linda.tupleSpace.size());

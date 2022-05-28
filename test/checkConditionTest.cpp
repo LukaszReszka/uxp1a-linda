@@ -306,7 +306,7 @@ TEST(checkConditionTest, checkIntegerEverything1)
 TEST(checkConditionTest, checkIntegerEverything2)
 {
     auto condParser = TupleConditionParser(std::string("integer:*"));
-    auto valParser = TupleValuesParser(std::string("integer = 123"));
+    auto valParser = TupleValuesParser(std::string("integer = 123.1"));
     auto tupleCondition = TupleCondition(condParser.parseWholeCondition());
     auto values = valParser.parseAllValues();
     auto tuple = uxp::Tuple(values);
@@ -315,8 +315,8 @@ TEST(checkConditionTest, checkIntegerEverything2)
 
 TEST(checkConditionTest, checkFloatEqual1)
 {
-    auto condParser = TupleConditionParser(std::string("float:123.1"));
-    auto valParser = TupleValuesParser(std::string("float = 123.1"));
+    auto condParser = TupleConditionParser(std::string("float: -123.1"));
+    auto valParser = TupleValuesParser(std::string("float = -123.1"));
     auto tupleCondition = TupleCondition(condParser.parseWholeCondition());
     auto values = valParser.parseAllValues();
     auto tuple = uxp::Tuple(values);
