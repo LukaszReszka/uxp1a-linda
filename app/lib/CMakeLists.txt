@@ -13,11 +13,6 @@ if(THREADS_HAVE_PTHREAD_ARG)
     set_property(TARGET my_app PROPERTY INTERFACE_COMPILE_OPTIONS "-pthread")
 endif()
 
-add_library(LIB_INTERPRETER STATIC ${SOURCES})
-set_target_properties(LIB_INTERPRETER PROPERTIES LINKER_LANGUAGE CXX)
-if(CMAKE_THREAD_LIBS_INIT)
-    target_link_libraries(LIB_INTERPRETER "${CMAKE_THREAD_LIBS_INIT}")
-endif()
 
 
 add_library(LIB_APP STATIC ${SOURCES})
