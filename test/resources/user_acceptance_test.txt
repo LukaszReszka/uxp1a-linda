@@ -1,0 +1,10 @@
+1:input((integer:1, string:*, float:*, string:"d"), 3)
+
+2:output(integer=2, integer=3, integer=1, string="Ala ma kota")
+
+3:input((integer:>0, string:"abc", float:*), 3)
+
+4:output(integer=1, string="abc", float=3.1415, string="d")
+
+5:output(integer=10, string="abc", float=3.1415)
+

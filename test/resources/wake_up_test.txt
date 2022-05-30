@@ -1,0 +1,11 @@
+1:input((string:*, float:>=5, integer: <= 5), 5)
+1:output(string="abrakadabra", float=5, integer=5)
+
+2:input((string:>="abrakadabra", float:*, integer:*), 5)
+
+3:output(string="abrakadabra", float=5, integer=4)
+
+4:read((string:*, float:*, integer:*), 5)
+
+5:output(string="hokus pokus", float=0, integer=0)
+
