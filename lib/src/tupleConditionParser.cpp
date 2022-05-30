@@ -9,6 +9,8 @@ TupleConditionParser::TupleConditionParser(std::string statement) : TupleParser(
 Condition TupleConditionParser::parseSingleCondition()
 {
     auto condition = Condition();
+    if(currentCharacter() == '|')
+        throw ParserException(EXPECTED_NEXT_STATEMENT);
     condition.valueType = parseValueType();
     while (skipWhites());
     if(currentCharacter() != ':')
@@ -43,5 +45,7 @@ std::vector<Condition> TupleConditionParser::parseWholeCondition()
         while (skipWhites())
             ;
     } while (currentCharacter() == ',');
+    if(currentCharacter() != '|')
+        throw ParserException(WRONG_SYNTAX);
     return conditionVector;
 }

@@ -11,7 +11,7 @@ public:
     std::string getShortcut() const; 
 
 private:
-    bool checkSingleCondition(std::variant<std::string, u_int32_t, float> singleValue, Condition singleCondition) const;
+    bool checkSingleCondition(SingleTupleValue singleValue, Condition singleCondition) const;
     std::vector<Condition> statement; 
 
 };

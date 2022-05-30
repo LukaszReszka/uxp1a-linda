@@ -8,6 +8,8 @@ TupleValuesParser::TupleValuesParser(std::string statement) : TupleParser(statem
 SingleTupleValue TupleValuesParser::parseSingleValue()
 {
     SingleTupleValue tupleValue;
+    if(currentCharacter() == '|')
+        throw ParserException(EXPECTED_NEXT_STATEMENT);
     auto valueType = parseValueType();
     while (skipWhites())
         ;
@@ -34,5 +36,7 @@ TupleValues TupleValuesParser::parseAllValues()
         while (skipWhites())
             ;
     } while (currentCharacter() == ',');
+    if(currentCharacter() != '|')
+        throw ParserException(WRONG_SYNTAX);
     return tupleValues;
 }

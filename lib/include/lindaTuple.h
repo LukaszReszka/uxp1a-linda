@@ -4,7 +4,7 @@
 #include <vector>
 
 
-using SingleTupleValue = std::variant<std::string, u_int32_t, float>;
+using SingleTupleValue = std::variant<std::string, int32_t, float>;
 using TupleValues = std::vector<SingleTupleValue>;
 
 namespace uxp {

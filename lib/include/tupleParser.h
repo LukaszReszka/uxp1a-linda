@@ -36,7 +36,7 @@ public:
 protected:
     SingleTupleValue parseValue(ValueType valueType);
     std::string parseString();
-    std::variant<u_int32_t, float> parseNumber();
+    std::variant<int32_t, float> parseNumber();
     char currentCharacter();
     void checkIfEnd();
     OperationType parseOperationType();

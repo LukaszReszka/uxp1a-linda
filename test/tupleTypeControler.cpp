@@ -12,8 +12,8 @@ using Time = int;
 
 TEST(TupleTypeControlerTest, ShouldAddTuple) {
   TupleTypeControler tupleTypeControler = TupleTypeControler();
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   uxp::Tuple tuple = uxp::Tuple(vec);
   tupleTypeControler.addTuple(tuple);
@@ -54,8 +54,8 @@ TEST(TupleTypeControlerTest, ShouldReadNulloptTuple) {
 TEST(TupleTypeControlerTest, ShouldGetTupleAfterAdd) {
   TupleTypeControler tupleTypeControler = TupleTypeControler();
 
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   uxp::Tuple tuple = uxp::Tuple(vec);
   tupleTypeControler.addTuple(tuple);
@@ -76,8 +76,8 @@ TEST(TupleTypeControlerTest, ShouldGetTupleAfterAdd) {
 TEST(TupleTypeControlerTest, ShouldReadTupleAfterAdd) {
   TupleTypeControler tupleTypeControler = TupleTypeControler();
 
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   uxp::Tuple tuple = uxp::Tuple(vec);
   tupleTypeControler.addTuple(tuple);
@@ -112,8 +112,8 @@ TEST(TupleTypeControlerTest, ShouldGetTupleBeforeAdd) {
 
   auto futureGetTuple = std::async(getTuple);
 
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   uxp::Tuple tuple = uxp::Tuple(vec);
   tupleTypeControler.addTuple(tuple);
@@ -140,8 +140,8 @@ TEST(TupleTypeControlerTest, ShouldReadTupleBeforeAdd) {
 
   auto futureReadTuple = std::async(readTuple);
 
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   uxp::Tuple tuple = uxp::Tuple(vec);
   tupleTypeControler.addTuple(tuple);
@@ -154,8 +154,8 @@ TEST(TupleTypeControlerTest, ShouldReadTupleBeforeAdd) {
 TEST(TupleTypeControlerTest, ShouldRemoveTupleWhenGetTupleIsExecuted) {
   TupleTypeControler tupleTypeControler = TupleTypeControler();
 
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   uxp::Tuple tuple = uxp::Tuple(vec);
   tupleTypeControler.addTuple(tuple);
@@ -175,8 +175,8 @@ TEST(TupleTypeControlerTest, ShouldRemoveTupleWhenGetTupleIsExecuted) {
 TEST(TupleTypeControlerTest, ShouldNotRemoveTupleWhenReadTupleIsExecuted) {
   TupleTypeControler tupleTypeControler = TupleTypeControler();
 
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   uxp::Tuple tuple = uxp::Tuple(vec);
   tupleTypeControler.addTuple(tuple);
@@ -225,8 +225,8 @@ TEST(TupleTypeControlerTest, ShouldPerformAddGetRead) {
   std::this_thread::sleep_for(std::chrono::milliseconds(10));
   auto futureReadTuple = std::async(readTuple);
 
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   uxp::Tuple tuple = uxp::Tuple(vec);
   tupleTypeControler.addTuple(tuple);
@@ -270,8 +270,8 @@ TEST(TupleTypeControlerTest, ShouldPerformAddReadGet) {
   std::this_thread::sleep_for(std::chrono::milliseconds(10));
   auto futureGetTuple = std::async(getTuple);
 
-  std::vector<std::variant<std::string, u_int32_t, float>> vec =
-      std::vector<std::variant<std::string, u_int32_t, float>>();
+  std::vector<std::variant<std::string, int32_t, float>> vec =
+      std::vector<std::variant<std::string, int32_t, float>>();
   vec.push_back(std::string("test"));
   uxp::Tuple tuple = uxp::Tuple(vec);
   tupleTypeControler.addTuple(tuple);

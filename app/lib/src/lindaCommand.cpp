@@ -5,8 +5,8 @@ namespace cmd_interpreter {
     std::string LindaCommand::tupleToString(const uxp::Tuple &tuple) {
         std::string tuple_str = "(";
         for(auto &tuple_element: tuple.getValues()) {
-            if(std::holds_alternative<u_int32_t>(tuple_element))
-                tuple_str += std::to_string(std::get<u_int32_t>(tuple_element));
+            if(std::holds_alternative<int32_t>(tuple_element))
+                tuple_str += std::to_string(std::get<int32_t>(tuple_element));
             else if(std::holds_alternative<float>(tuple_element))
                 tuple_str += std::to_string(std::get<float>(tuple_element));
             else
