@@ -1,0 +1,12 @@
+1:input((integer:>=10), 5)
+
+2:input((integer:>5), 5)
+
+3:read((integer:<7), 5)
+
+4:input((integer:*), 5)
+
+5:read((integer:5), 5)
+
+6:output(integer=6)
+6:output(integer=5)
