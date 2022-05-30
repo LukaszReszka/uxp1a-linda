@@ -1,2 +1,5 @@
 build
 lib/googletest
+.vscode/
+.idea/
+cmake-build-debug/

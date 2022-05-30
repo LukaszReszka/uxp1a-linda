@@ -1,9 +1,9 @@
-#include <iostream>
-#include "test.h"
+#include "commandInterpreter.h"
 
+int main() {
 
-int main(){
-    auto test = TestClass();
-    std::cout<<test.add(1,2)<<std::endl;
+    auto command_interpreter = cmd_interpreter::CommandInterpreter();
+    command_interpreter.runInterpreter();
+
     return 0;
 }
